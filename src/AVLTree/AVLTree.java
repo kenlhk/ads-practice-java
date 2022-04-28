@@ -96,9 +96,9 @@ public class AVLTree<T extends Comparable<T>> {
             node = new Node(key);
         }
         // otherwise, transverse the tree depending on the value of the key
-        else if (key.compareTo(node.key) < 0){
+        else if (key.compareTo(node.key) < 0) {
             node.left = insert(key, node.left);
-        } else if (key.compareTo(node.key) > 0){
+        } else if (key.compareTo(node.key) > 0) {
             node.right = insert(key, node.right);
         } else {
             throw new RuntimeException("The node with key " + key + " is already existed.");
@@ -107,34 +107,34 @@ public class AVLTree<T extends Comparable<T>> {
         return rebalance(node);
     }
 
-    public void delete(T key){
+    public void delete(T key) {
         root = delete(key, root);
     }
 
-    private Node delete(T key, Node node){
+    private Node delete(T key, Node node) {
         // if no node at the current position, stop the recursion
-        if(node == null){
+        if (node == null) {
             return null;
         }
         // transverse the tree depending on the value of the key
-        if(key.compareTo(node.key) < 0){
+        if (key.compareTo(node.key) < 0) {
             node.left = delete(key, node.left);
-        } else if (key.compareTo(node.key) > 0){
+        } else if (key.compareTo(node.key) > 0) {
             node.right = delete(key, node.right);
         }
         // node to be deleted
         // if the node has no child, just delete the node
-        else if(node.left == null && node.right == null){
+        else if (node.left == null && node.right == null) {
             node = null;
         }
         // if the node has one child, replace the node with its child
-        else if(node.left == null){
+        else if (node.left == null) {
             node = node.right;
-        } else if(node.right == null){
+        } else if (node.right == null) {
             node = node.left;
         }
         // if the node has two child, replace it with the left most leaf node in the right subtree
-        else{
+        else {
             Node successor = findMinimum(node.right);
             node.key = successor.key;
             node.right = delete(successor.key, node.right);
@@ -143,47 +143,47 @@ public class AVLTree<T extends Comparable<T>> {
     }
 
     // helper to find the minimum node
-    private Node findMinimum(Node node){
-        if(node.left != null){
+    private Node findMinimum(Node node) {
+        if (node.left != null) {
             node = node.left;
         }
         return node;
     }
 
     // check if the tree contains certain key
-    public boolean contains(T key){
+    public boolean contains(T key) {
         return contains(key, root);
     }
 
-    private boolean contains(T key, Node node){
-        if(node == null) return false;
-        if(key.equals(node.key)) return true;
+    private boolean contains(T key, Node node) {
+        if (node == null) return false;
+        if (key.equals(node.key)) return true;
         return key.compareTo(node.key) < 0 ? contains(key, node.left) : contains(key, node.right);
     }
 
     // printing methods
-    private void printInOrder(Node node){
-        if(node == null) return;
+    private void printInOrder(Node node) {
+        if (node == null) return;
         printInOrder(node.left);
         System.out.print(node.key + " ");
         printInOrder(node.right);
     }
 
-    private void printPreOrder(Node node){
-        if(node == null) return;
+    private void printPreOrder(Node node) {
+        if (node == null) return;
         System.out.print(node.key + " ");
         printPreOrder(node.left);
         printPreOrder(node.right);
     }
 
-    private void printPostOrder(Node node){
-        if(node == null) return;
+    private void printPostOrder(Node node) {
+        if (node == null) return;
         printPostOrder(node.left);
         printPostOrder(node.right);
         System.out.print(node.key + " ");
     }
 
-    public void print(){
+    public void print() {
         System.out.println("In order:");
         printInOrder(root);
         System.out.println("\nPre order:");
